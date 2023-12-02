@@ -1,0 +1,36 @@
+{
+	"name": "xiaomanzs",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite --open",
+		"preview": "vite preview",
+		"build": "vite build",
+		"type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+	},
+	"dependencies": {
+		"@vueuse/core": "^10.2.0",
+		"axios": "^1.4.0",
+		"element-plus": "^2.3.5",
+		"lodash": "^4.17.21",
+		"pinia": "^2.0.36",
+		"pinia-plugin-persistedstate": "^3.1.0",
+		"sass": "^1.62.1",
+		"unplugin-element-plus": "^0.7.1",
+		"vue": "^3.3.2",
+		"vue-router": "^4.2.0"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^4.2.3",
+		"@vue/tsconfig": "^0.4.0",
+		"autoprefixer": "^10.4.14",
+		"postcss": "^8.4.24",
+		"tailwindcss": "^3.3.2",
+		"typescript": "~5.0.4",
+		"unplugin-auto-import": "^0.16.2",
+		"unplugin-vue-components": "^0.24.1",
+		"vite": "^4.3.5",
+		"vite-plugin-eslint": "^1.8.1",
+		"vue-tsc": "^1.6.4"
+	}
+}
