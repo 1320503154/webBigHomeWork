@@ -1,20 +1,23 @@
 <script setup>
+	import { ref, reactive, watch } from "vue";
+	import gsap from "gsap";
 	import { storeToRefs } from "pinia";
 	import { onMounted } from "vue";
 	import { useCartStore } from "@/stores/cartStore";
 	import { useUserStore } from "@/stores/user";
-	import { insertCartAPI, getNewCartListAPI, delCartAPI } from "@/apis/carts";
+	import _ from "lodash";
 
 	const cartStore = useCartStore();
 
 	const userStore = useUserStore();
 
-	const { cartList } = storeToRefs(cartStore);
+	const { cartList, totalCount, selectedCount, selectedPrice } =
+		storeToRefs(cartStore);
 
 	const singleCheck = (item, selected) => {
 		console.log("item::: ", item);
 		console.log("selected::: ", selected);
-		cartStore.singleCheck(item.id, selected);
+		cartStore.singleCheck(item.cardid, selected);
 	};
 
 	const allCheck = (selected) => {
@@ -25,6 +28,36 @@
 		const userId = userStore.userInfo;
 		const res = cartStore.huoQuGouWuChe(userId);
 	});
+	// 添加 GSAP 动画效果
+	const animateTotalCount = reactive({
+		number: 0,
+	});
+	watch(totalCount, (newValue) => {
+		gsap.to(animateTotalCount, {
+			duration: 0.5,
+			number: Number(newValue) || 0,
+		});
+	});
+	const animateSelectedCount = reactive({
+		number: 0,
+	});
+	watch(selectedCount, (newValue) => {
+		gsap.to(animateSelectedCount, {
+			duration: 0.5,
+			number: Number(newValue) || 0,
+		});
+	});
+	const animateSelectedPrice = reactive({
+		number: 0,
+	});
+	watch(selectedPrice, (newValue) => {
+		gsap.to(animateSelectedPrice, {
+			duration: 0.5,
+			number: Number(newValue) || 0,
+		});
+	});
+	// 添加 GSAP 动画效果
+
 	const apiUrl = "http://10.60.82.146:8080";
 	const imgUrl = (item) => {
 		return `${apiUrl}/${item.thumbnail}`;
@@ -41,6 +74,7 @@
 						<tr>
 							<th width="120">
 								<!-- 此处传递的参数就是check框的value -->
+								<span style="color: black">全选 </span>
 								<el-checkbox
 									:model-value="cartStore.isAllCheck"
 									@change="allCheck" />
@@ -107,7 +141,7 @@
 								</p>
 							</td>
 						</tr>
-						<tr v-if="cartList.length < 0">
+						<tr v-if="cartList.length <= 0">
 							<td colspan="6">
 								<div class="cart-none">
 									<el-empty description="购物车列表为空">
@@ -126,9 +160,11 @@
 			<!-- 操作栏 -->
 			<div class="action">
 				<div class="batch">
-					共 {{ cartStore.totalCount }} 件商品，已选择
-					{{ cartStore.selectedCount }} 件，商品合计：
-					<span class="red">¥ {{ cartStore.selectedPrice }} </span>
+					共 {{ animateTotalCount.number.toFixed(0) }} 件商品，已选择
+					{{ animateSelectedCount.number.toFixed(0) }} 件，商品合计：
+					<span class="red"
+						>¥ {{ animateSelectedPrice.number.toFixed(0) }}
+					</span>
 				</div>
 				<div class="total">
 					<el-button

@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite --open",
+		"dev": "vite",
 		"preview": "vite preview",
 		"build": "vite build",
 		"type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
@@ -12,6 +12,7 @@
 		"@vueuse/core": "^10.2.0",
 		"axios": "^1.4.0",
 		"element-plus": "^2.3.5",
+		"gsap": "^3.12.3",
 		"lodash": "^4.17.21",
 		"particlesjs": "^2.2.3",
 		"pinia": "^2.0.36",

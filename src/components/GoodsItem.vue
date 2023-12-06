@@ -4,6 +4,8 @@
 	import { useCartStore } from "@/stores/cartStore";
 	import { useUserStore } from "@/stores/user";
 
+	import _ from "lodash";
+
 	const cartStore = useCartStore();
 	const userStore = useUserStore();
 
@@ -23,13 +25,13 @@
 	const handleChange = (value) => {
 		console.log(value);
 	};
-	const addToCart = async (good) => {
+	const addToCart = _.throttle(async (good) => {
 		console.log("userStore.userInfo::: ", userStore.userInfo);
 		console.log(good);
 		console.log("商品id:" + good.id);
 		const result = await cartStore.addCart(good, num.value);
 		console.log("await cartStore.addCart(good, num);::: ", cartStore.cartList);
-	};
+	}, 1500);
 </script>
 
 <template>

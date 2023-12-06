@@ -11,15 +11,19 @@ export const useCartStore = defineStore(
 		const isLogin = userStore.isLogin;
 		let userId = userStore.userInfo;
 		const cartList = ref([]); // 购物车列表
-
+		const goodsTransformer = (res) => {
+			res.forEach((item) => {
+				item.selected = true; // 为每个商品添加一个selected属性,默认为true,表示选中
+				item.num = parseFloat(item.num);
+			});
+			return res;
+		};
 		// 获取购物车信息
 		const huoQuGouWuChe = function (userId) {
 			getNewCartListAPI({ userId })
 				.then((res) => {
-					res.forEach((item) => {
-						item.selected = true; // 为每个商品添加一个selected属性,默认为true,表示选中
-					});
-					cartList.value = res;
+					cartList.value = goodsTransformer(res);
+
 					console.log("cartList.value::: ", cartList.value);
 				})
 				.catch((err) => {
@@ -31,9 +35,13 @@ export const useCartStore = defineStore(
 		const addCart = async (goods, num) => {
 			if (isLogin) {
 				console.log("登录接口调用添加购物车");
-
+				ElMessage({
+					message: "添加商品成功",
+					type: "success",
+				});
 				const { id: goodsId, price1: price } = goods;
-				cartList.value = await insertCartAPI({ userId, goodsId, num, price });
+				const res = await insertCartAPI({ userId, goodsId, num, price });
+				cartList.value = goodsTransformer(res);
 				console.log("cartList.value::: ", cartList.value);
 			} else {
 				// 用户未登录
@@ -46,10 +54,14 @@ export const useCartStore = defineStore(
 
 		// 从购物车删除商品
 		const delCart = async (goods) => {
+			console.log("goods::: ", goods);
+
 			if (isLogin) {
 				console.log("登录接口调用删除购物车");
-				const { id: cartId, price1: price } = goods;
-				cartList.value = await delCartAPI({ userId, cartId });
+				const { cardid } = goods;
+
+				const res = await delCartAPI({ userId, cartId: cardid });
+				cartList.value = goodsTransformer(res);
 			} else {
 				// 用户未登录
 				ElMessage({
@@ -60,8 +72,8 @@ export const useCartStore = defineStore(
 		};
 
 		// 单个商品选中状态切换
-		const singleCheck = (goodsId, selected) => {
-			const item = cartList.value.find((item) => goodsId === item.goodsId);
+		const singleCheck = (cardid, selected) => {
+			const item = cartList.value.find((item) => cardid === item.cardid);
 			// item是引用类型,装的是原本对象里面的根据find条件匹配好的指针,所以直接修改item.selected的值,会影响到cartList.value中的值
 			item.selected = selected;
 		};
