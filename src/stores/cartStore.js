@@ -16,6 +16,9 @@ export const useCartStore = defineStore(
 		const huoQuGouWuChe = function (userId) {
 			getNewCartListAPI({ userId })
 				.then((res) => {
+					res.forEach((item) => {
+						item.selected = true; // 为每个商品添加一个selected属性,默认为true,表示选中
+					});
 					cartList.value = res;
 					console.log("cartList.value::: ", cartList.value);
 				})

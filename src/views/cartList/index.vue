@@ -107,7 +107,7 @@
 								</p>
 							</td>
 						</tr>
-						<tr v-if="!!cartList">
+						<tr v-if="cartList.length < 0">
 							<td colspan="6">
 								<div class="cart-none">
 									<el-empty description="购物车列表为空">
