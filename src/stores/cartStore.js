@@ -73,7 +73,8 @@ export const useCartStore = defineStore(
 
 		// 单个商品选中状态切换
 		const singleCheck = (cardid, selected) => {
-			const item = cartList.value.find((item) => cardid === item.cardid);
+			const item = cartList.value.find((item) => cardid === item.cardid); //此处传递必须是cardid,因为cardid对应商品id.
+			//每个商品是独一无二的.
 			// item是引用类型,装的是原本对象里面的根据find条件匹配好的指针,所以直接修改item.selected的值,会影响到cartList.value中的值
 			item.selected = selected;
 		};

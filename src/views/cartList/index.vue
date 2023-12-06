@@ -5,7 +5,7 @@
 	import { onMounted } from "vue";
 	import { useCartStore } from "@/stores/cartStore";
 	import { useUserStore } from "@/stores/user";
-	import _ from "lodash";
+	import _ from "lodash"; //导入节流函数
 
 	const cartStore = useCartStore();
 
@@ -56,7 +56,7 @@
 			number: Number(newValue) || 0,
 		});
 	});
-	// 添加 GSAP 动画效果
+	// 添加 GSAP 动画效果,数字动画
 
 	const apiUrl = "http://10.60.82.146:8080";
 	const imgUrl = (item) => {

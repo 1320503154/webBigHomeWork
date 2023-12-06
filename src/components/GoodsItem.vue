@@ -26,6 +26,7 @@
 		console.log(value);
 	};
 	const addToCart = _.throttle(async (good) => {
+		//套一层节流函数,1500ms内只能点击一次
 		console.log("userStore.userInfo::: ", userStore.userInfo);
 		console.log(good);
 		console.log("商品id:" + good.id);
