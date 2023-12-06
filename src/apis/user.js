@@ -1,22 +1,23 @@
 import shopping from "@/utils/axios";
 
-export const userRegister = ({ name, password }) => {
+export const userRegister = ({ account, password }) => {
 	return shopping({
 		url: `/user/register`,
-		method: "get",
+		method: "GET",
 		params: {
-			name,
-			password,
+			"name": account,
+			"password": password,
 		},
 	});
 };
-export const userLogin = ({ name, password }) => {
+
+export const userLogin = ({ account, password }) => {
 	return shopping({
 		url: `/user/login`,
-		method: "get",
+		method: "GET",
 		params: {
-			name,
-			password,
+			"name": account,
+			"password": password,
 		},
 	});
 };

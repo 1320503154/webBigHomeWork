@@ -33,9 +33,9 @@ http://[ip]:[port]/cart/deleteById?userId=[userId]&cartId=[userId]
 http://10.60.82.164:8080/cart/deleteById?userId=7a3ae031010a4358b500925941c6019c&cartId=29ade395dfd14162879e71ca901b389b
 
 */
-export const addCart = ({ userId, goodsId, num, price }) => {
+export const insertCartAPI = ({ userId, goodsId, num, price }) => {
 	return shopping({
-		url: `/carts/add`,
+		url: `/cart/add`,
 		method: "get",
 		params: {
 			userId,
@@ -45,18 +45,24 @@ export const addCart = ({ userId, goodsId, num, price }) => {
 		},
 	});
 };
-export const getCartList = ({ userId }) => {
+// 列出所有在购物车内的商品
+// 向后端传输userId字段，代表当前用户id
+// http://[ip]:[port]/cart/listByUser?userId=[userId]
+// 返回值
+// Json数组 当前用户购物车内容
+// cardid为购物车内商品项的id
+export const getNewCartListAPI = ({ userId }) => {
 	return shopping({
-		url: `/carts/listByUser`,
+		url: `/cart/listByUser`,
 		method: "get",
 		params: {
 			userId,
 		},
 	});
 };
-export const deleteCart = ({ userId, cartId }) => {
+export const delCartAPI = ({ userId, cartId }) => {
 	return shopping({
-		url: `/carts/deleteById`,
+		url: `/cart/deleteById`,
 		method: "get",
 		params: {
 			userId,

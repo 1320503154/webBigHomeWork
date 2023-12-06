@@ -94,7 +94,10 @@ const submitForm = () => {
         <header class="login-header">
             <div class="container m-top-20">
                 <h1 class="logo">
-                    <RouterLink to="/">小兔鲜</RouterLink>
+                    <RouterLink to="/">
+                        <span>Steam 商城</span>
+                    </RouterLink>
+
                 </h1>
                 <RouterLink class="entry" to="/">
                     进入网站首页
@@ -135,15 +138,15 @@ const submitForm = () => {
         <footer class="login-footer">
             <div class="container">
                 <p>
-                    <a href="javascript:;">关于我们</a>
-                    <a href="javascript:;">帮助中心</a>
-                    <a href="javascript:;">售后服务</a>
-                    <a href="javascript:;">配送与验收</a>
-                    <a href="javascript:;">商务合作</a>
-                    <a href="javascript:;">搜索推荐</a>
-                    <a href="javascript:;">友情链接</a>
+                    <a href="javascript:;">我是底部</a>
+                    <a href="javascript:;">完成任务</a>
+                    <a href="javascript:;">复习功课</a>
+                    <a href="javascript:;">好好学习</a>
+                    <a href="javascript:;">考上高分</a>
+                    <a href="javascript:;">想要工资</a>
+                    <a href="javascript:;">快乐生活</a>
                 </p>
-                <p>CopyRight &copy; 小兔鲜儿</p>
+                <p>CopyRight &copy; 李昊戈</p>
             </div>
         </footer>
     </div>
@@ -170,8 +173,20 @@ $priceColor: #f56c6c;
             display: block;
             height: 132px;
             width: 100%;
-            text-indent: -9999px;
-            background: url("@/assets/images/logo.png") no-repeat center 18px / contain;
+            position: relative;
+            background: url("@/assets/images/logo.png") no-repeat center 0px / contain;
+        }
+
+        span {
+            width: 100%;
+            position: absolute;
+            right: -100%;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgb(86, 167, 152);
+            font-size: 36px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+            z-index: 100;
         }
     }
 

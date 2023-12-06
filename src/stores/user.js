@@ -9,22 +9,27 @@ export const useUserStore = defineStore(
 	"user",
 	() => {
 		//管理用户数据的state
-		const userInfo = ref({});
+		const userInfo = ref('');
 		//获取用户信息的action
-		const getUserInfo = async ({ name, password }) => {
-			const result = await userLogin({ name, password });
+		const getUserInfo = async ({ account, password }) => {
+			console.log('Login account, password::: ', account, password);
+
+			const result = await userLogin({ account, password });
 			userInfo.value = result;
 			return result;
 		};
 		//清除用户信息
 		const clearUserInfo = () => {
-			userInfo.value = {};
+			// console.log('clearUserInfo::: ', userInfo.value);
+			userInfo.value = false;
 		};
-		const userSignUp = async ({ name, password }) => {
-			const result = await userRegister({ name, password });
+		const userSignUp = async ({ account, password }) => {
+			console.log('SIgn up account', account);
+			console.log('SIgn up password', password);
+			const result = await userRegister({ account, password });
 			return result;
 		};
-		const isLogin = computed(() => userInfo.value);
+		const isLogin = computed(() => !!userInfo.value);//!!强制转换字符串为布尔值
 		return {
 			userInfo, //返回的响应式数据自动解包
 			getUserInfo,

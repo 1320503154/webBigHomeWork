@@ -6,8 +6,7 @@
                 <form action="">
                     <div class="form_group">
                         <label class="sub_title" for="email">账户</label>
-                        <input placeholder="输入你的账户名" v-model="formList.username" id="email" class="form_style"
-                            type="username">
+                        <input placeholder="输入你的账户名" v-model="formList.account" id="email" class="form_style" type="text">
                     </div>
                     <div class="form_group">
                         <label class="sub_title" for="password">密码</label>
@@ -15,9 +14,8 @@
                             type="password">
                     </div>
                     <div>
-                        <button @click="submitForm" class="btn">注册!</button>
-                        <p>已经有了一个账户? <a class="link" href="" @click="toLogin">点我去登录!</a></p><a class="link" href="">
-                        </a>
+                        <button @click.prevent="submitForm" class="btn">注册!</button>
+                        <p>已经有了一个账户? <span class="link" @click="toLogin">点我去登录!</span></p>
                     </div><a class="link" href="">
 
                     </a>
@@ -30,28 +28,33 @@
 
 <script setup>
 import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 const router = useRouter();
 const userStore = useUserStore();
 const formList = reactive({
-    username: "",
+    account: "",
     password: "",
 });
 const submitForm = async () => {
     //提交登录表单
-    const { username, password, } = formList;
-
-    const result = await userStore.userSignUp({ username, password }); //执行仓库里的函数
+    const { account, password, } = formList;
+    console.log('注册表单::: ', account, password)
+    const result = await userStore.userSignUp({ account, password }); //执行仓库里的函数
     console.log('注册result::: ', result);
-    //1.提示用户
-    if (result) {
+    //注册成功后跳转到登录页面
+    if (result !== "isexist") {
         ElMessage({
             type: "success",
             message: "注册成功",
         });
-    }
+        router.push({ name: "LayOut" });
+    } else {
+        ElMessage({
+            type: "error",
+            message: "注册失败,用户已存在",
+        });
 
-    //2.跳转首页
-    router.replace({ name: "LayOut" }); //使用replace方法,使得用户无法根据历史记录返回登录界面
+    }
 };
 const toLogin = () => {
     router.push({ name: "Login" });
@@ -147,5 +150,7 @@ const toLogin = () => {
     font-weight: 800;
     color: #264143;
     padding: 5px;
+    text-decoration: underline;
+    cursor: pointer;
 }
 </style>

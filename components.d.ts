@@ -9,8 +9,20 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ElAffix: typeof import('element-plus/es')['ElAffix']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel']
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
+    ElEmpty: typeof import('element-plus/es')['ElEmpty']
+    ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     GoodsItem: typeof import('./src/components/GoodsItem.vue')['default']
+    Header: typeof import('./src/components/Header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface ComponentCustomProperties {
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
   }
 }

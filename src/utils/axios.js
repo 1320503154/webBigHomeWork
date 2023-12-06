@@ -17,14 +17,6 @@ const shopping = axios.create({
 // axios请求拦截器
 shopping.interceptors.request.use(
 	(config) => {
-		//1.从pinia获取token
-
-		// const token = userStore.userInfo.token;
-		//2.按照后端要求设置请求头
-		// const headers = config.headers;
-		// if (token) {
-		// 	headers.Authorization = `Bearer ${token}`;
-		// }
 		return config;
 	},
 	(error) => Promise.reject(error)
@@ -39,18 +31,10 @@ shopping.interceptors.response.use(
 		if (error) {
 			const { status } = error.response;
 			const ErrorData = error.response.data;
-			//统一错误提示
 			ElMessage({
 				type: "warning",
-				message: ErrorData.message,
+				message: ErrorData.error,
 			});
-			// //token失效状态码401拦截
-			// if (status === 401) {
-			// 	//清除用户信息
-			// 	userStore.clearUserInfo();
-			// 	//跳转到登录页
-			// 	router.push("/login");
-			// }
 		}
 		return Promise.reject(error);
 	}
