@@ -4,9 +4,11 @@
 			:right="100"
 			:bottom="100" />
 		<Header></Header>
+		<!-- 问题来了,为什么不用插槽来管理我的商品展示列表和购物车链表??? -->
 		<div class="container">
 			<h1 class="showBanner">整体商品概览</h1>
 		</div>
+
 		<div class="homeBanner">
 			<HomeBanner></HomeBanner>
 		</div>
@@ -30,6 +32,7 @@
 	import GoodsItem from "@/components/GoodsItem.vue";
 	import HomeBanner from "./components/HomeBanner.vue";
 	import Header from "./components/Header.vue";
+	import HeaderCart from "./components/HeaderCart.vue";
 	import { useUserStore } from "@/stores/user";
 	import { useGoodStore } from "@/stores/goodStore";
 

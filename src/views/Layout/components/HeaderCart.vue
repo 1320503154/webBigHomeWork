@@ -1,49 +1,74 @@
 <script setup>
+	// 导入Vue.js相关模块和库
+	import { useUserStore } from "@/stores/user";
 	import { useCartStore } from "@/stores/cartStore";
 	const cartStore = useCartStore();
+	const userStore = useUserStore();
+	const apiUrl = "http://10.60.82.146:8080";
+	onMounted(() => {
+		const userId = userStore.userInfo;
+		const res = cartStore.huoQuGouWuChe(userId);
+	});
+	const imgUrl = (item) => {
+		return `${apiUrl}/${item.thumbnail}`;
+	};
 </script>
+
 <template>
-	<div class="cart">
+	<!-- 购物车结构 -->
+	<div
+		v-if="cartStore.cartList"
+		class="cart">
+		<!-- 购物车图标 -->
 		<a
 			class="curr"
 			href="javascript:;">
 			<i class="iconfont icon-cart"></i><em>{{ cartStore.cartList.length }}</em>
 		</a>
+		<!-- 购物车弹出层 -->
 		<div class="layer">
 			<div class="list">
+				<!-- 购物车列表 -->
 				<div
 					class="item"
-					v-for="i in cartStore.cartList"
-					:key="i.skuId">
+					v-for="item in cartStore.cartList"
+					:key="item.cardid">
+					<!-- 商品链接 -->
 					<RouterLink to="">
+						<!-- 商品图片 -->
 						<img
-							:src="i.picture"
+							:src="imgUrl(item)"
 							alt="" />
 						<div class="center">
-							<p class="name ellipsis-2">
-								{{ i.name }}
-							</p>
-							<p class="attr ellipsis">{{ i.attrsText }}</p>
+							<!-- 商品名称 -->
+							<p class="name ellipsis-2">{{ item.name }}</p>
+							<!-- 商品属性 -->
 						</div>
 						<div class="right">
-							<p class="price">&yen;{{ i.price }}</p>
-							<p class="count">x{{ i.count }}</p>
+							<!-- 商品价格 -->
+							<p class="price">&yen;{{ item.price }}</p>
+							<!-- 商品数量 -->
+							<p class="count">x{{ item.num }}</p>
 						</div>
 					</RouterLink>
+					<!-- 删除商品按钮 -->
 					<i
 						class="iconfont icon-close-new"
-						@click="cartStore.delCart(i.skuId)"></i>
+						@click="cartStore.delCart(item)"></i>
 				</div>
 			</div>
+			<!-- 购物车底部信息 -->
 			<div class="foot">
+				<!-- 商品总数和总价 -->
 				<div class="total">
 					<p>共 {{ cartStore.totalCount }} 件商品</p>
 					<p>&yen; {{ cartStore.totalPrice }}</p>
 				</div>
+				<!-- 结算按钮 -->
 				<el-button
 					size="large"
 					type="primary"
-					@click="$router.push('/cartlist')"
+					@click="$router.push('/cart')"
 					>去购物车结算</el-button
 				>
 			</div>
@@ -52,6 +77,11 @@
 </template>
 
 <style scoped lang="scss">
+	$xtxColor: #27ba9b;
+	$helpColor: #e26237;
+	$sucColor: #1dc779;
+	$warnColor: #ffb302;
+	$priceColor: #cf4444;
 	.cart {
 		width: 50px;
 		position: relative;
@@ -66,12 +96,13 @@
 
 			.icon-cart {
 				font-size: 22px;
+				color: black;
 			}
 
 			em {
 				font-style: normal;
 				position: absolute;
-				right: 0;
+				right: 1;
 				top: 0;
 				padding: 1px 6px;
 				line-height: 1;
@@ -146,6 +177,7 @@
 			height: 310px;
 			overflow: auto;
 			padding: 0 10px;
+			width: 100%;
 
 			&::-webkit-scrollbar {
 				width: 10px;
@@ -229,5 +261,9 @@
 				}
 			}
 		}
+	}
+	a {
+		text-decoration: none;
+		color: black;
 	}
 </style>
