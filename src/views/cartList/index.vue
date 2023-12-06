@@ -65,6 +65,9 @@
 </script>
 
 <template>
+	<el-backtop
+		:right="100"
+		:bottom="100" />
 	<HeaderVue helloText="购物车页面"></HeaderVue>
 	<div class="xtx-cart-page">
 		<div class="container m-top-20">
@@ -158,22 +161,26 @@
 				</table>
 			</div>
 			<!-- 操作栏 -->
-			<div class="action">
-				<div class="batch">
-					共 {{ animateTotalCount.number.toFixed(0) }} 件商品，已选择
-					{{ animateSelectedCount.number.toFixed(0) }} 件，商品合计：
-					<span class="red"
-						>¥ {{ animateSelectedPrice.number.toFixed(0) }}
-					</span>
+			<el-affix
+				position="bottom"
+				:offset="20">
+				<div class="action">
+					<div class="batch">
+						共 {{ animateTotalCount.number.toFixed(0) }} 件商品，已选择
+						{{ animateSelectedCount.number.toFixed(0) }} 件，商品合计：
+						<span class="red"
+							>¥ {{ animateSelectedPrice.number.toFixed(0) }}
+						</span>
+					</div>
+					<div class="total">
+						<el-button
+							size="large"
+							type="primary"
+							>下单结算</el-button
+						>
+					</div>
 				</div>
-				<div class="total">
-					<el-button
-						size="large"
-						type="primary"
-						>下单结算</el-button
-					>
-				</div>
-			</div>
+			</el-affix>
 		</div>
 	</div>
 </template>

@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<el-backtop
+			:right="100"
+			:bottom="100" />
 		<Header></Header>
 		<div class="container">
 			<h1 class="showBanner">整体商品概览</h1>
