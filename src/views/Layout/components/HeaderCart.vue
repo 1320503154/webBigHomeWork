@@ -34,7 +34,7 @@
 					v-for="item in cartStore.cartList"
 					:key="item.cardid">
 					<!-- 商品链接 -->
-					<RouterLink to="">
+					<RouterLink to="/cart">
 						<!-- 商品图片 -->
 						<img
 							:src="imgUrl(item)"

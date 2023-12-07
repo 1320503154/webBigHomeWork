@@ -8,8 +8,7 @@ export const useCartStore = defineStore(
 	"cart",
 	() => {
 		const userStore = useUserStore();
-		const isLogin = userStore.isLogin;
-		let userId = userStore.userInfo;
+		//传递过来的东西都丢失响应式了,使用storeToRef
 		const cartList = ref([]); // 购物车列表
 		const goodsTransformer = (res) => {
 			res.forEach((item) => {
@@ -33,14 +32,20 @@ export const useCartStore = defineStore(
 
 		// 添加商品到购物车
 		const addCart = async (goods, num) => {
-			if (isLogin) {
+			console.log("goods::: ", goods);
+			if (userStore.isLogin) {
 				console.log("登录接口调用添加购物车");
 				ElMessage({
 					message: "添加商品成功",
 					type: "success",
 				});
 				const { id: goodsId, price1: price } = goods;
-				const res = await insertCartAPI({ userId, goodsId, num, price });
+				const res = await insertCartAPI({
+					userId: userStore.userInfo,
+					goodsId,
+					num,
+					price,
+				});
 				cartList.value = goodsTransformer(res);
 				console.log("cartList.value::: ", cartList.value);
 			} else {
@@ -56,11 +61,14 @@ export const useCartStore = defineStore(
 		const delCart = async (goods) => {
 			console.log("goods::: ", goods);
 
-			if (isLogin) {
+			if (userStore.isLogin) {
 				console.log("登录接口调用删除购物车");
 				const { cardid } = goods;
 
-				const res = await delCartAPI({ userId, cartId: cardid });
+				const res = await delCartAPI({
+					userId: userStore.userInfo,
+					cartId: cardid,
+				});
 				cartList.value = goodsTransformer(res);
 			} else {
 				// 用户未登录
@@ -124,6 +132,11 @@ export const useCartStore = defineStore(
 			}, 0); // 设置初始值为0,也就是第一次迭代时,total=0,然后item从index=0处开始
 		});
 
+		// 所有选中的商品
+		const selectedGoods = computed(() => {
+			return cartList.value.filter((item) => item.selected); // 过滤出选中的商品,返回数组
+		});
+
 		return {
 			huoQuGouWuChe,
 			addCart,
@@ -136,6 +149,7 @@ export const useCartStore = defineStore(
 			totalPrice,
 			singleCheck,
 			allCheck,
+			selectedGoods,
 		};
 	},
 	{

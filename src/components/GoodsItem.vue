@@ -28,10 +28,10 @@
 	const addToCart = _.throttle(async (good) => {
 		//套一层节流函数,1500ms内只能点击一次
 		console.log("userStore.userInfo::: ", userStore.userInfo);
-		console.log(good);
-		console.log("商品id:" + good.id);
+		// console.log(good);
+		// console.log("商品id:" + good.id);
 		const result = await cartStore.addCart(good, num.value);
-		console.log("await cartStore.addCart(good, num);::: ", cartStore.cartList);
+		// console.log("await cartStore.addCart(good, num);::: ", result);
 	}, 1500);
 </script>
 

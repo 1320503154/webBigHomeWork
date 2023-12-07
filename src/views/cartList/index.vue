@@ -5,13 +5,16 @@
 	import { onMounted } from "vue";
 	import { useCartStore } from "@/stores/cartStore";
 	import { useUserStore } from "@/stores/user";
+	import { useRouter } from "vue-router";
+	import { createOrderAPI } from "@/apis/order";
+
 	import _ from "lodash"; //导入节流函数
 
 	const cartStore = useCartStore();
 
 	const userStore = useUserStore();
 
-	const { cartList, totalCount, selectedCount, selectedPrice } =
+	const { cartList, totalCount, selectedCount, selectedPrice, selectedGoods } =
 		storeToRefs(cartStore);
 
 	const singleCheck = (item, selected) => {
@@ -27,40 +30,73 @@
 	onMounted(async () => {
 		const userId = userStore.userInfo;
 		const res = cartStore.huoQuGouWuChe(userId);
+		cartStore.allCheck(true);
 	});
 	// 添加 GSAP 动画效果
 	const animateTotalCount = reactive({
 		number: 0,
 	});
-	watch(totalCount, (newValue) => {
-		gsap.to(animateTotalCount, {
-			duration: 0.5,
-			number: Number(newValue) || 0,
-		});
-	});
+	watch(
+		totalCount,
+		(newValue) => {
+			gsap.to(animateTotalCount, {
+				duration: 0.7,
+				number: Number(newValue) || 0,
+			});
+		},
+		{ immediate: true }
+	);
 	const animateSelectedCount = reactive({
 		number: 0,
 	});
-	watch(selectedCount, (newValue) => {
-		gsap.to(animateSelectedCount, {
-			duration: 0.5,
-			number: Number(newValue) || 0,
-		});
-	});
+	watch(
+		selectedCount,
+		(newValue) => {
+			gsap.to(animateSelectedCount, {
+				duration: 0.7,
+				number: Number(newValue) || 0,
+			});
+		},
+		{ immediate: true }
+	);
 	const animateSelectedPrice = reactive({
 		number: 0,
 	});
-	watch(selectedPrice, (newValue) => {
-		gsap.to(animateSelectedPrice, {
-			duration: 0.5,
-			number: Number(newValue) || 0,
-		});
-	});
+	watch(
+		selectedPrice,
+		(newValue) => {
+			gsap.to(animateSelectedPrice, {
+				duration: 0.7,
+				number: Number(newValue) || 0,
+			});
+		},
+		{ immediate: true }
+	);
 	// 添加 GSAP 动画效果,数字动画
 
 	const apiUrl = "http://10.60.82.146:8080";
 	const imgUrl = (item) => {
 		return `${apiUrl}/${item.thumbnail}`;
+	};
+
+	// 订单列表传送
+	const router = useRouter();
+	const orderList = selectedGoods.value.map((obj) => obj.cardid).join(",");
+	console.log(orderList);
+	// 提交订单完成
+	const createOrder = async () => {
+		const userId = userStore.userInfo;
+		const res = await createOrderAPI({ userId, orderList });
+		console.log(`orderres::${res}`);
+	};
+	const toOrder = () => {
+		console.log(`selectedGoods::${selectedGoods.value}`);
+		createOrder();
+		ElMessage({
+			message: "成功生成订单",
+			type: "success",
+		});
+		router.push({ path: "/order" });
 	};
 </script>
 
@@ -174,8 +210,10 @@
 					</div>
 					<div class="total">
 						<el-button
+							:plain="true"
 							size="large"
 							type="primary"
+							@click="toOrder"
 							>下单结算</el-button
 						>
 					</div>
@@ -194,6 +232,8 @@
 
 	.xtx-cart-page {
 		margin-top: 20px;
+		display: grid;
+		place-items: center;
 
 		.cart {
 			background: #fff;

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-affix :offset="0">
-			<div>
+			<div class="headContainer">
 				<div
 					class="nav_bg"
 					v-if="!userStore.isLogin">
@@ -33,6 +33,8 @@
 						@click="userStore.clearUserInfo"
 						>点我退出登录</el-button
 					>
+				</div>
+				<div class="cartList">
 					<HeaderCart></HeaderCart>
 				</div>
 			</div>
@@ -73,7 +75,7 @@
 	}
 
 	.nav_bg {
-		background: url("cuteCat.jpg") no-repeat center / cover;
+		// background: url("cuteCat.jpg") no-repeat center / cover;
 		margin-left: 10%;
 		width: 80vw;
 		padding: 10px 0;
@@ -90,5 +92,13 @@
 		color: rgba(0, 0, 0, 1);
 		background: #fff;
 		@include rounded;
+	}
+	.headContainer {
+		position: relative;
+	}
+	.cartList {
+		position: absolute;
+		top: 3rem;
+		right: 10rem;
 	}
 </style>
