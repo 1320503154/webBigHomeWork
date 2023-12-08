@@ -41,13 +41,15 @@
 		left: 0; //此处主要还是Banner轮播图和左侧的分类组件是一个父元素,container
 		top: 0; //所以距离左侧和上侧0,就可以了
 		z-index: 98;
-
+		border-radius: 30px;
 		img {
 			width: 30%;
 			height: 400px;
 		}
 	}
-
+	.container {
+		border-radius: 30px;
+	}
 	.container {
 		display: flex;
 		flex-direction: column;

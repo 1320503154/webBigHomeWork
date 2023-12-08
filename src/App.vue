@@ -10,7 +10,7 @@
 	const options = {
 		background: {
 			color: {
-				value: "#1d2e40", // 背景颜色
+				value: "#ffffff", // 背景颜色
 			},
 		},
 		fpsLimit: 120, // 帧率限制
