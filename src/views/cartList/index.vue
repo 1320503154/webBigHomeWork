@@ -214,6 +214,9 @@
 							size="large"
 							type="primary"
 							@click="toOrder"
+							:disabled="
+								selectedGoods.length <= 0 || cartStore.cartList.length <= 0
+							"
 							>下单结算</el-button
 						>
 					</div>

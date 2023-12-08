@@ -17,22 +17,22 @@ import shopping from "@/utils/axios";
 // 接口示例
 // http://10.60.82.164:8080/order/listByUser?userId=250f423a093f41319127a57b9bc0e5a8
 
-export const createOrderAPI = ({ userId,orderList }) => {
-    return shopping({
-        url:`/order/addCastOrder`,
-        method: "get",
-        params: {
-            userId,
-            "cartList": orderList
-        }
-    })
-}
+export const createOrderAPI = ({ userId, orderList }) => {
+	return shopping({
+		url: `/order/addCastOrder`,
+		method: "get",
+		params: {
+			userId,
+			cartList: orderList,
+		},
+	});
+};
 export const orderListAPI = ({ userId }) => {
-    return shopping({
-        url:`/order/listByUser`,
-        method: "get",
-        params: {
-            userId
-        }
-    })
-}
+	return shopping({
+		url: `/order/listByUser`,
+		method: "get",
+		params: {
+			userId,
+		},
+	});
+};

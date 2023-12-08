@@ -13,7 +13,7 @@ import router from "./router";
 const app = createApp(App);
 const pinia = createPinia();
 
-pinia.use(piniaPluginPersistedstate);
+pinia.use(piniaPluginPersistedstate); //使用pinia持久化插件
 
 app.use(pinia);
 app.use(router);

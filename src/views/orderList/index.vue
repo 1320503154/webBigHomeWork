@@ -100,8 +100,12 @@
 		console.log(`goodsCount::${orderListShow.value.count}`);
 		console.log(`goodsPrice::${orderListShow.value.price}`);
 		console.log(res[0].orderDetail[0].goodsName);
+
+		//刷新页面,不然有bug
+		location.reload();
 	};
 	orderLists();
+
 	const submitOrder = () => {
 		ElMessage({
 			message: "提交订单成功",
