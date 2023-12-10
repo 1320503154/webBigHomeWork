@@ -35,10 +35,11 @@
 	import HeaderCart from "./components/HeaderCart.vue";
 	import { useUserStore } from "@/stores/user";
 	import { useGoodStore } from "@/stores/goodStore";
+	import { useRoute } from "vue-router";
 
 	const userStore = useUserStore();
 	const goodStore = useGoodStore();
-
+	const route = useRoute();
 	const disabled = computed(() => {
 		return goodList.value.length > 80; //当商品数量大于80的时候disable
 	});
@@ -52,6 +53,14 @@
 	const loadMoreGoods = () => {
 		goodList.value.push(...goodLoad);
 	};
+	const unwatch = watch(route.path, () => {
+		console.log("监听到路由变化route.path::: ", route.path);
+		goodList.value = goodStore.goodList;
+		goodLoad = goodList.value;
+	});
+	onUnmounted(() => {
+		unwatch();
+	});
 </script>
 
 <style lang="scss" scoped>

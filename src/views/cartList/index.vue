@@ -72,6 +72,25 @@
 		},
 		{ immediate: true }
 	);
+	//为每个商品添加GSAP动画
+	const animateSubtotals = reactive({});
+	cartList.value.forEach((item) => {
+		animateSubtotals[item.cardid] = reactive({
+			number: 0,
+		});
+		const goodsPrice = computed(() => item.price * item.num); //计算属性牛逼
+		watch(
+			goodsPrice,
+			(newSubtotal) => {
+				gsap.to(animateSubtotals[item.cardid], {
+					duration: 0.7,
+					number: newSubtotal || 0,
+				});
+			},
+			{ immediate: true }
+		);
+	});
+
 	// 添加 GSAP 动画效果,数字动画
 
 	const apiUrl = "http://10.60.82.146:8080";
@@ -164,7 +183,9 @@
 									v-model="i.num" />
 							</td>
 							<td class="tc">
-								<p class="f16 red">&yen;{{ i.price * i.num }}</p>
+								<p class="f16 red">
+									&yen;{{ animateSubtotals[i.cardid].number.toFixed(0) }}
+								</p>
 							</td>
 							<td class="tc">
 								<p>
