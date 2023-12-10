@@ -33,7 +33,7 @@ shopping.interceptors.response.use(
 			const ErrorData = error.response.data;
 			ElMessage({
 				type: "warning",
-				message: ErrorData.error,
+				message: `请求失败-错误信息是:${ErrorData.error}`,
 			});
 		}
 		return Promise.reject(error);

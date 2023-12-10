@@ -23,7 +23,7 @@ export const useCartStore = defineStore(
 				.then((res) => {
 					cartList.value = goodsTransformer(res);
 
-					console.log("cartList.value::: ", cartList.value);
+					// console.log("cartList.value::: ", cartList.value);
 				})
 				.catch((err) => {
 					console.error(err); // 使用catch而不是reject
@@ -32,7 +32,7 @@ export const useCartStore = defineStore(
 
 		// 添加商品到购物车
 		const addCart = async (goods, num) => {
-			console.log("goods::: ", goods);
+			// console.log("goods::: ", goods);
 			if (userStore.isLogin) {
 				console.log("登录接口调用添加购物车");
 				ElMessage({
@@ -47,7 +47,7 @@ export const useCartStore = defineStore(
 					price,
 				});
 				cartList.value = goodsTransformer(res);
-				console.log("cartList.value::: ", cartList.value);
+				// console.log("cartList.value::: ", cartList.value);
 			} else {
 				// 用户未登录
 				ElMessage({
@@ -59,7 +59,7 @@ export const useCartStore = defineStore(
 
 		// 从购物车删除商品
 		const delCart = async (goods) => {
-			console.log("goods::: ", goods);
+			// console.log("goods::: ", goods);
 
 			if (userStore.isLogin) {
 				console.log("登录接口调用删除购物车");

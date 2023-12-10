@@ -43,7 +43,7 @@ const router = createRouter({
 					next();
 				} else {
 					ElMessage({
-						message: "请先添加商品到购物车,不能直接访问订单页面",
+						message: "请先访问购物车页面,不能直接访问订单页面",
 						type: "warning",
 					});
 					// 不是从购物车跳转而来，重定向到购物车页面或其他处理方式
