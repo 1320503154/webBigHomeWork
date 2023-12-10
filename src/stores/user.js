@@ -5,7 +5,6 @@ import { ref, reactive, computed } from "vue";
 import { userLogin, userRegister } from "@/apis/user";
 import { defineStore } from "pinia"; //不引入这个函数,在vue的调试工具中
 import { useRouter } from "vue-router";
-const router = useRouter();
 //将不会显示pinia调试工具
 export const useUserStore = defineStore(
 	"user",
